@@ -1,10 +1,10 @@
 # VirtualMeter
 It is a tiny script which runs and changes your rainmeter theme and wallpaper based on the different Windows Virutal desktops you are in
 
-#Usage
+## Usage
 Just put the script in the startup folder usually found in "C:\Users\[USER NAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
-#Personalization
+##  Personalization
 You can personalise the app by editing the config.ini file. There might be a GUI enabled method in the future.
 
 

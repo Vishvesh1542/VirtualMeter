@@ -3,6 +3,7 @@ import time
 import os
 import ctypes
 import subprocess
+import time, traceback
 
 from typing import List
 import pythoncom
@@ -94,8 +95,8 @@ def main(Myconfig):
 
 config = get_config()
 
-while True:
-    try:    
-        main(config)
-    finally:
-        pass
+try:    
+    main(config)
+except Exception as e:
+    with open(os.getcwd() + "//error.log", "w+") as file:
+        file.write(f"{time.strftime("%Y-%m-%d %H:%M:%S")}".ljust(25) + f"{traceback.format_exc()}")

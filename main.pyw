@@ -55,13 +55,14 @@ def set_wallpaper(image_path: str, use_activedesktop: bool = True):
     if use_activedesktop:
         try:
             enable_activedesktop()
-        finally:
-            pass
-    pythoncom.CoInitialize()
-    iad = pythoncom.CoCreateInstance(shell.CLSID_ActiveDesktop,
+            iad = pythoncom.CoCreateInstance(shell.CLSID_ActiveDesktop,
                                      None,
                                      pythoncom.CLSCTX_INPROC_SERVER,
                                      shell.IID_IActiveDesktop)
+        except WindowsError:
+            pass
+    pythoncom.CoInitialize()
+
     iad.SetWallpaper(str(image_path), 0)
     iad.ApplyChanges(shellcon.AD_APPLY_ALL)
     force_refresh()

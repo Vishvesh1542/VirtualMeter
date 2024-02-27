@@ -53,19 +53,24 @@ def enable_activedesktop():
 
 def set_wallpaper(image_path: str, use_activedesktop: bool = True):
     if use_activedesktop:
+        # Try to use active desktop
         try:
             enable_activedesktop()
             iad = pythoncom.CoCreateInstance(shell.CLSID_ActiveDesktop,
                                      None,
                                      pythoncom.CLSCTX_INPROC_SERVER,
                                      shell.IID_IActiveDesktop)
-        except WindowsError:
-            pass
-    pythoncom.CoInitialize()
+            
+            pythoncom.CoInitialize()
 
-    iad.SetWallpaper(str(image_path), 0)
-    iad.ApplyChanges(shellcon.AD_APPLY_ALL)
-    force_refresh()
+            iad.SetWallpaper(str(image_path), 0)
+            iad.ApplyChanges(shellcon.AD_APPLY_ALL)
+            force_refresh()
+
+        # If you cant just switch normally
+        except WindowsError:
+            ctypes.windll.user32.SystemParametersInfoW(20, 0, image_path , 0)
+
 
 def get_config():
     MyConfig = configparser.ConfigParser()
